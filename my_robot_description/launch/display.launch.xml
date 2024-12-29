@@ -1,0 +1,16 @@
+<launch>
+    <arg name="urdf_path"
+        value="$(find-pkg-share my_robot_description)/urdf/my_robot.urdf" />    <!--gonna find share folder, in my_robot_description-->
+
+    <!--start robot state publisher-->
+    <node pkg="robot_state_publisher" exec="robot_state_publisher">
+        <param name="robot_description"
+            value="$(command 'xacro $(var urdf_path)')" />
+    </node>
+
+    <!--start joint space publisher-->
+    <node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" />
+
+    <!--start rviz2-->
+    <node pkg="rviz2" exec="rviz2" output="screen" />
+</launch>
