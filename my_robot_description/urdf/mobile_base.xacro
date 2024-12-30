@@ -16,9 +16,11 @@
             <geometry>
                 <box size="${base_length} ${base_width} ${base_height}" />  <!-- lenght width height. in metric system . meters-->
             </geometry>
-            <origin xyz="0 0 0.1" rpy="0 0 0" />    <!--roll pitch yaw . radian-->
+            <origin xyz="0 0 ${base_height / 2.0}" rpy="0 0 0" />    <!--roll pitch yaw . radian-->
             <material name="blue" />                <!--we used the material tag-->
         </visual>
+        <xacro:box_inertia m="5.0" l="${base_length}" w="${base_width}" h="${base_height}"
+                           xyz="${base_height / 2.0}" rpy="0 0 0" />
     </link>
 
     <!--function. params not mandatory-->
@@ -30,7 +32,9 @@
                 </geometry>
                 <origin xyz="0 0 0" rpy="${pi / 2.0} 0 0" />
                 <material name="gray" />
-            </visual>            
+            </visual>
+            <xacro:cylinder_inertia m="1.0" r="${wheel_radius}" l="${wheel_length}"
+                                 xyz="0 0 0" rpy="${pi / 2.0} 0 0" />          
         </link>
     </xacro:macro>
 
@@ -45,6 +49,8 @@
             <origin xyz="0 0 0" rpy="0 0 0" />
             <material name="gray" />
         </visual>
+        <xacro:sphere_inertia m="0.5" r="${wheel_radius / 2.0}"
+                              xyz="0 0 0" rpy="0 0 0" />
     </link>
 
 
