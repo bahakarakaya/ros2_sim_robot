@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-    <!--colcon build symlink install, again after creating files-->
-    <xacro:include filename="common_properties.xacro" />    
-    <xacro:include filename="mobile_base.xacro" />
-
-</robot>
