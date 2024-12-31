@@ -25,8 +25,9 @@
             </geometry>
             <origin xyz="0 0 ${base_height / 2.0}" rpy="0 0 0" /> 
         </collision>
-        <xacro:box_inertia m="5.0" l="${base_length}" w="${base_width}" h="${base_height}"
+        <xacro:box_inertia m="5.0" l="${2*base_length}" w="${2*base_width}" h="${2*base_height}"
                            xyz="0 0 ${base_height / 2.0}" rpy="0 0 0" />
+        <!--multiplied inertial values we send by 2 because the robot was moving in place-->
     </link>
 
     <!--function. params not mandatory-->
@@ -45,7 +46,7 @@
                 </geometry>
                 <origin xyz="0 0 0" rpy="${pi / 2.0} 0 0" />
             </collision>
-            <xacro:cylinder_inertia m="1.0" r="${wheel_radius}" l="${wheel_length}"
+            <xacro:cylinder_inertia m="1.0" r="${2*wheel_radius}" l="${2*wheel_length}"
                                  xyz="0 0 0" rpy="${pi / 2.0} 0 0" />          
         </link>
     </xacro:macro>
@@ -67,7 +68,7 @@
             </geometry>
             <origin xyz="0 0 0" rpy="0 0 0" />
         </collision>
-        <xacro:sphere_inertia m="0.5" r="${wheel_radius / 2.0}"
+        <xacro:sphere_inertia m="0.5" r="${2*wheel_radius / 2.0}"
                               xyz="0 0 0" rpy="0 0 0" />
     </link>
 
