@@ -11,7 +11,9 @@
               value="$(command 'xacro $(var urdf_path)')" />
     </node>
 
-    <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py" />
+    <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
+        <arg name="world" value="$(find-pkg-share my_robot_bringup)/worlds/test_world.world" />
+    </include>
 
     <!--spawn robot-->
     <node pkg="gazebo_ros" exec="spawn_entity.py"
