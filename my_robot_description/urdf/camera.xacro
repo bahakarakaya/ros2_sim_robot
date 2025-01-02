@@ -43,4 +43,7 @@
         <origin xyz="${(base_length + camera_length) / 2.0} 0 ${base_height / 2.0}" rpy="0 0 0" />
     </joint>
 
+    <!--add this in case you want to work with opencv in gazebo 
+    https://www.ros.org/reps/rep-0103.html#suffix-frames -->
+
 </robot>

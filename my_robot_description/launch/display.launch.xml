@@ -8,14 +8,14 @@
     <!--start robot state publisher-->
     <node pkg="robot_state_publisher" exec="robot_state_publisher">
         <param name="robot_description"
-            value="$(command 'xacro $(var urdf_path)')" />
+            value="$(command 'xacro $(var urdf_path)')" /> !!!!!
     </node>
 
-    <!--start joint space publisher-->
+    <!--start FAKE joint state publisher (encoder?)-->
     <node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" />
 
     <!--start rviz2-->
-    <node pkg="rviz2" exec="rviz2" output="screen" 
-        args="-d $(var rviz_config_path)"/>
+    <node pkg="rviz2" exec="rviz2" output="screen"     
+         args="-d $(var rviz_config_path)" />
         <!-- -d config file flag for RViz-->
 </launch>
