@@ -8,18 +8,25 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
-# Uncomment and modify this to add your executable
-# add_executable(my_node src/my_node.cpp)
-# ament_target_dependencies(my_node rclcpp)
+add_executable(control_switch_node src/control_switch_node.cpp)
 
-# Uncomment this to install your executable
-# install(TARGETS my_node DESTINATION lib/${PROJECT_NAME})
+ament_target_dependencies(control_switch_node 
+  rclcpp
+  sensor_msgs
+  geometry_msgs
+)
 
 install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}/
 )
 
+install(TARGETS
+  control_switch_node
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()

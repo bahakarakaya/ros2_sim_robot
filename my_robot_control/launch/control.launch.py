@@ -41,14 +41,26 @@ def generate_launch_description():
             'scale_angular.yaw': 0.5,
             'scale_angular_turbo.yaw': 1.0,
             'enable_button': 5,  # Hold 'RB' while driving
-            'enable_turbo_button': 7,  # Hold 'start' while driving in turbo mode
+            'enable_turbo_button': 2,  # Hold 'X' while driving in turbo mode
             'require_enable_button': False
         }]
+    )
+
+    # Control switch node
+    control_switch_node = Node(
+        package='my_robot_control',
+        executable='control_switch_node',
+        output='screen',
+        remappings=[
+            ('/joy_cmd_vel', '/teleop_twist_joy/cmd_vel'),
+            ('/cmd_vel', '/diff_drive_controller/cmd_vel_unstamped')
+        ]
     )
     
     # Launch Description
     return LaunchDescription([
         gazebo_launch,
         joy_node,
-        teleop_node
+        teleop_node,
+        control_switch_node
     ])
