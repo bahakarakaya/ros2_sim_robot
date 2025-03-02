@@ -13,4 +13,9 @@ install(
   DESTINATION share/${PROJECT_NAME}/
 )
 
+ament_export_dependencies(
+  ros2_control
+  ros2_controllers
+)
+
 ament_package()
