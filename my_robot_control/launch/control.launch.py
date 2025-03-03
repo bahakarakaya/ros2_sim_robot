@@ -43,18 +43,17 @@ def generate_launch_description():
             'enable_button': 5,  # Hold 'RB' while driving
             'enable_turbo_button': 2,  # Hold 'X' while driving in turbo mode
             'require_enable_button': False
-        }]
+        }],
+        remappings=[
+            ('/cmd_vel', '/cmd_vel_raw')
+        ]
     )
 
     # Control switch node
     control_switch_node = Node(
         package='my_robot_control',
         executable='control_switch_node',
-        output='screen',
-        remappings=[
-            ('/joy_cmd_vel', '/teleop_twist_joy/cmd_vel'),
-            ('/cmd_vel', '/diff_drive_controller/cmd_vel_unstamped')
-        ]
+        output='screen'
     )
     
     # Launch Description

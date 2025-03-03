@@ -10,9 +10,10 @@
 
 !! Ayarlandığı gamepad konfigürasyonuna göre çalışır.
         Mevcut konfigürasyon: XBOX 
-   Aksi halde segmentation fault alınabilir. 
+Aksi halde segmentation fault alınabilir. 
 */
 
+//TODO: QoS ayarlarını entegre et
 
 class ControlSwitchNode : public rclcpp::Node
 {
@@ -30,8 +31,11 @@ public:
         
         // Robotik kol için Twist subscriber
         twist_subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>(
-            "/cmd_vel", 10,
+            "/cmd_vel_raw", 10,
             [this](const geometry_msgs::msg::Twist::SharedPtr msg) { twist_callback(msg); });
+
+        cmd_vel_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>(
+            "/cmd_vel", 10);
 
         control_mode_ = "vehicle";
     }
@@ -50,10 +54,12 @@ private:
     // Twist mesajlarını dinleyen subscriber
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_subscriber_;
 
-    //Joystickten gelen mesajları dinleyen fonksiyon
+    rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_publisher_;
+
+    //Joystickten gelen mesajları dinleyen fonksiyon. Kontrol modunu değiştirir
     void joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg)
     {
-        //if (msg->buttons.empty()) return;  //hiç buton olmadığında kodun çökmesini önler
+        if (msg->buttons.empty()) return;  //hiç buton olmadığında kodun çökmesini önler
 
         bool switch_button_pressed = msg->buttons[7] == 1;  // Start butonu
         
@@ -65,9 +71,15 @@ private:
         prev_button_state = switch_button_pressed;
     }
 
-    // "arm" moduna geçildiğinde Twist -> TwistStamped çevirir. /servo_server/delta_twist_cmds üzerinde yayınlar
+    
     void twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
     {
+        if (!msg) {
+            RCLCPP_WARN(this->get_logger(), "Received null twist message");
+            return;
+        }
+
+        // Twist -> TwistStamped çevirir. /servo_server/delta_twist_cmds üzerinde yayınlar
         if (control_mode_ == "arm")
         {
             geometry_msgs::msg::TwistStamped twist_stamped_msg;
@@ -75,6 +87,10 @@ private:
             twist_stamped_msg.header.frame_id = "base_link";
             twist_stamped_msg.twist = *msg;
             arm_publisher_->publish(twist_stamped_msg);
+        }
+        else
+        {
+            cmd_vel_publisher_->publish(*msg);
         }
     }
 };
