@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>my_robot_bringup</name>
+  <name>my_robot_control</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
   <maintainer email="bhkrky@gmail.com">babuntu</maintainer>
@@ -9,10 +9,10 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>my_robot_description</exec_depend>
-  <exec_depend>robot_state_publisher</exec_depend>
-  <exec_depend>gazebo_ros</exec_depend>
-  <exec_depend>teleop_twist_joy</exec_depend>
+  <depend>rclcpp</depend>
+  <depend>teleop_twist_joy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
